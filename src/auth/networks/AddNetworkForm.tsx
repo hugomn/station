@@ -16,7 +16,7 @@ const AddNetwork = () => {
   /* form */
   const form = useForm<TerraNetwork>({ mode: "onChange" })
   const { register, handleSubmit, formState } = form
-  const { errors } = formState
+  const { errors, isValid } = formState
 
   const submit = (values: TerraNetwork) => {
     add(values)
@@ -54,7 +54,7 @@ const AddNetwork = () => {
         />
       </FormItem>
 
-      <Submit />
+      <Submit disabled={!isValid} />
     </Form>
   )
 }

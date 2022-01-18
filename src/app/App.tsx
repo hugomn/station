@@ -27,9 +27,21 @@ import DevTools from "./sections/DevTools"
 
 /* init */
 import InitBankBalance from "./InitBankBalance"
+import { useNodeInfo } from "data/queries/tendermint"
+import Overlay from "./components/Overlay"
+import NetworkError from "./NetworkError"
 
 const App = () => {
   const { element: routes } = useNav()
+  const { isError } = useNodeInfo()
+
+  if (isError) {
+    return (
+      <Overlay>
+        <NetworkError />
+      </Overlay>
+    )
+  }
 
   return (
     <Layout>
