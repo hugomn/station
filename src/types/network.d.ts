@@ -6,3 +6,7 @@ interface TerraNetwork {
   chainID: string
   lcd: string
 }
+
+interface CustomNetwork extends TerraNetwork {
+  preconfigure: boolean
+}
