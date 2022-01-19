@@ -18,18 +18,14 @@ const NetworkError = () => {
       <article>
         <h1 className={styles.title}>
           {isLocalTerra
-            ? t("LocalTerra doesn't seem to be running")
-            : t(`${network} doesn't seem to be running`)}
+            ? t("LocalTerra is not running")
+            : t(`${network} is not running`)}
         </h1>
 
         {isLocalTerra && (
-          <p>
-            <ExternalLink href="https://github.com/terra-money/localterra">
-              LocalTerra
-            </ExternalLink>{" "}
-            is a one-click local Terra testnet & ecosystem for easy development
-            of smart contracts and Terra tools
-          </p>
+          <ExternalLink href="https://github.com/terra-money/localterra">
+            {t("Learn more")}
+          </ExternalLink>
         )}
       </article>
 
