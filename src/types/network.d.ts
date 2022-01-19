@@ -7,6 +7,8 @@ interface TerraNetwork {
   lcd: string
 }
 
+type CustomNetworks = Record<NetworkName, CustomNetwork>
+
 interface CustomNetwork extends TerraNetwork {
-  preconfigure: boolean
+  preconfigure?: boolean
 }

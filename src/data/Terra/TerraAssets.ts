@@ -5,7 +5,7 @@ import { flatten, groupBy, map, mergeAll, values } from "ramda"
 import { AccAddress } from "@terra-money/terra.js"
 import { ASSETS } from "config/constants"
 import shuffle from "utils/shuffle"
-import { useNetworks } from "app/NetworksProvider"
+import { useNetworks } from "app/InitNetworks"
 import { queryKey, RefetchOptions } from "../query"
 import { useNetworkName } from "../wallet"
 

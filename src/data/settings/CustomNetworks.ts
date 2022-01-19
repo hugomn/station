@@ -1,8 +1,6 @@
 import { atom, useRecoilState } from "recoil"
-import { fromPairs } from "ramda"
 import { getLocalSetting, setLocalSetting } from "utils/localStorage"
 import { SettingKey } from "utils/localStorage"
-import { useNetworks } from "app/NetworksProvider"
 
 const customNetworksState = atom({
   key: "customNetworks",
@@ -36,11 +34,4 @@ export const useCustomNetworks = () => {
     updateList(customNetworks.filter((item) => item.name !== name))
 
   return { list: customNetworks, add, remove, validateName }
-}
-
-export const useMergeNetworks = () => {
-  const networks = useNetworks()
-  const { list } = useCustomNetworks()
-  const custom = fromPairs(list.map((item) => [item.name, item]))
-  return { ...networks, ...custom }
 }

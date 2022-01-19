@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { useNetworkState } from "data/wallet"
 import { useCustomNetworks } from "data/settings/CustomNetworks"
 import { Form, FormItem, Submit, Input, Checkbox } from "components/form"
-import { useNetworks } from "app/NetworksProvider"
+import { useNetworks } from "app/InitNetworks"
 
 const AddNetwork = () => {
   const { t } = useTranslation()
