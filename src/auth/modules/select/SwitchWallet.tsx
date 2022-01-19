@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import { truncate } from "@terra.kitchen/utils"
 import usePreconfigured from "auth/hooks/usePreconfigured"
@@ -14,18 +15,23 @@ import styles from "./SwitchWallet.module.scss"
 const cx = classNames.bind(styles)
 
 const SwitchWallet = () => {
+  const { t } = useTranslation()
   const { connectedWallet, wallets, connect, connectPreconfigured } = useAuth()
   const preconfigured = usePreconfigured()
   const { preconfigure } = useNetwork()
 
-  const preconfiguredWallets = (
+  const preconfiguredWallets = preconfigure && (
     <Select
-      value={connectedWallet?.name}
+      value={connectedWallet?.name ?? ""}
       onChange={(e) => {
         const wallet = preconfigured.find(({ name }) => name === e.target.value)
         if (wallet) connectPreconfigured(wallet)
       }}
     >
+      <option value="" disabled>
+        {t("Preconfigured wallets...")}
+      </option>
+
       {preconfigured.map(({ name }) => {
         return (
           <option value={name} key={name}>
@@ -36,7 +42,7 @@ const SwitchWallet = () => {
     </Select>
   )
 
-  const localWallets = (
+  const localWallets = !!wallets.length && (
     <ul className={styles.list}>
       {wallets.map((wallet) => {
         const { name, address, lock } = wallet
