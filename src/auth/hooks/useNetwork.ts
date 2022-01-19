@@ -31,7 +31,7 @@ export const useNetworkOptions = () => {
   })
 }
 
-export const useNetwork = () => {
+export const useNetwork = (): CustomNetwork => {
   const networks = useNetworks()
   const network = useRecoilValue(networkState)
   const wallet = useWallet()

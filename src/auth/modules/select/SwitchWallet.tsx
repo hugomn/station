@@ -2,6 +2,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import { truncate } from "@terra.kitchen/utils"
 import usePreconfigured from "auth/hooks/usePreconfigured"
 import classNames from "classnames/bind"
+import { useNetwork } from "data/wallet"
+import { Select } from "components/form"
 import { Flex } from "components/layout"
 import AuthButton from "../../components/AuthButton"
 import MultisigBadge from "../../components/MultisigBadge"
@@ -13,31 +15,28 @@ const cx = classNames.bind(styles)
 
 const SwitchWallet = () => {
   const { connectedWallet, wallets, connect, connectPreconfigured } = useAuth()
-  const preconfiguredWallets = usePreconfigured()
+  const preconfigured = usePreconfigured()
+  const { preconfigure } = useNetwork()
 
-  if (preconfiguredWallets)
-    return (
-      <ul className={styles.list}>
-        {preconfiguredWallets.map((wallet) => {
-          const { name } = wallet
-          const active = name === connectedWallet?.name
+  const preconfiguredWallets = (
+    <Select
+      value={connectedWallet?.name}
+      onChange={(e) => {
+        const wallet = preconfigured.find(({ name }) => name === e.target.value)
+        if (wallet) connectPreconfigured(wallet)
+      }}
+    >
+      {preconfigured.map(({ name }) => {
+        return (
+          <option value={name} key={name}>
+            {name}
+          </option>
+        )
+      })}
+    </Select>
+  )
 
-          return (
-            <li key={name}>
-              <AuthButton
-                className={cx(styles.wallet)}
-                onClick={() => connectPreconfigured(wallet)}
-                active={active}
-              >
-                {name}
-              </AuthButton>
-            </li>
-          )
-        })}
-      </ul>
-    )
-
-  return !wallets.length ? null : (
+  const localWallets = (
     <ul className={styles.list}>
       {wallets.map((wallet) => {
         const { name, address, lock } = wallet
@@ -70,6 +69,13 @@ const SwitchWallet = () => {
         )
       })}
     </ul>
+  )
+
+  return (
+    <>
+      {preconfiguredWallets}
+      {localWallets}
+    </>
   )
 }
 

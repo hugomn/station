@@ -20,7 +20,7 @@ const InitNetworks: FC = ({ children }) => {
 
       const networks = {
         ...chains,
-        localterra: { ...chains.localterra, preconfigured: true },
+        localterra: { ...chains.localterra, preconfigure: true },
       }
 
       setNetworks({
