@@ -1,5 +1,6 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import { truncate } from "@terra.kitchen/utils"
+import usePreconfigured from "auth/hooks/usePreconfigured"
 import classNames from "classnames/bind"
 import { Flex } from "components/layout"
 import AuthButton from "../../components/AuthButton"
@@ -11,7 +12,28 @@ import styles from "./SwitchWallet.module.scss"
 const cx = classNames.bind(styles)
 
 const SwitchWallet = () => {
-  const { connectedWallet, wallets, connect } = useAuth()
+  const { connectedWallet, wallets, connect, connectPreconfigured } = useAuth()
+  const preconfiguredWallets = usePreconfigured()
+
+  if (preconfiguredWallets)
+    return (
+      <ul className={styles.list}>
+        {preconfiguredWallets.map((wallet) => {
+          const { name } = wallet
+          return (
+            <li key={name}>
+              <AuthButton
+                className={cx(styles.wallet)}
+                onClick={() => connectPreconfigured(wallet)}
+                active={false}
+              >
+                {name}
+              </AuthButton>
+            </li>
+          )
+        })}
+      </ul>
+    )
 
   return !wallets.length ? null : (
     <ul className={styles.list}>
