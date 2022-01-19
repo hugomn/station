@@ -20,12 +20,14 @@ const SwitchWallet = () => {
       <ul className={styles.list}>
         {preconfiguredWallets.map((wallet) => {
           const { name } = wallet
+          const active = name === connectedWallet?.name
+
           return (
             <li key={name}>
               <AuthButton
                 className={cx(styles.wallet)}
                 onClick={() => connectPreconfigured(wallet)}
-                active={false}
+                active={active}
               >
                 {name}
               </AuthButton>
